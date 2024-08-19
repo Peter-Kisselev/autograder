@@ -43,11 +43,13 @@ router.get("/authlogin", async (req, res) => {
     res.redirect(theurl);
   }
 });
+
 router.get("/login", async (req, res) => {
   let CODE = req.query.code;
   let data = await processFunction(CODE, req, res);
   await check(data.user_data, data.req, data.res);
 });
+
 router.get("/tjioilogin", (req, res) => {
   if (req.session.loggedin) {
     res.redirect("/grade/profile");
@@ -55,6 +57,7 @@ router.get("/tjioilogin", (req, res) => {
     res.render("tjioiLogin");
   }
 });
+
 router.post("/tjioilogin", async (req, res) => {
   let id = parseInt(req.body.id);
   if (isNaN(id)) res.send("Invalid credentials");
@@ -69,6 +72,7 @@ router.post("/tjioilogin", async (req, res) => {
     res.send("Invalid credentials");
   }
 });
+
 router.post("/updateStats", async (req, res) => {
   let usaco = req.body.usaco_div;
   let cf = req.body.cf_handle;
@@ -80,15 +84,18 @@ router.post("/updateStats", async (req, res) => {
   }
   res.redirect("/grade/profile");
 });
+
 router.get("/info", checkLoggedIn, async (req, res) => {
   res.render("info", {
     tjioi: req.session.tjioi,
   });
 });
+
 router.post("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
+
 router.get("/profile", checkLoggedIn, (req, res) => {
   if (req.session.tjioi) {
     res.render("tjioiProfile", {
@@ -104,6 +111,7 @@ router.get("/profile", checkLoggedIn, (req, res) => {
     });
   }
 });
+
 router.get("/profile/:id", checkLoggedIn, async (req, res) => {
   if (req.session.tjioi) {
     res.redirect("/grade/profile");
@@ -119,9 +127,11 @@ router.get("/profile/:id", checkLoggedIn, async (req, res) => {
     }
   }
 });
+
 router.get("/", async (req, res) => {
   res.redirect("/grade/profile");
 });
+
 router.get("/attendance", async (req, res) => {
   if (req.session.loggedin) {
     deviceClass = "main";
@@ -135,6 +145,7 @@ router.get("/attendance", async (req, res) => {
     res.redirect("/");
   }
 });
+
 router.post("/attendanceComplete", async (req, res) => {
   if (req.session.loggedin) {
     let pass = req.body.pass;
@@ -144,6 +155,7 @@ router.post("/attendanceComplete", async (req, res) => {
     res.redirect("/");
   }
 });
+
 router.get("/contests", checkLoggedIn, async (req, res) => {
   let contests = await getAllContests();
   contests = contests.filter(function (elem) {
@@ -156,6 +168,7 @@ router.get("/contests", checkLoggedIn, async (req, res) => {
     contests: contests,
   });
 });
+
 router.get("/contests/:id", checkLoggedIn, async (req, res) => {
   let cid = req.params.id;
   let problems = await grabContestProblems(cid);
@@ -232,6 +245,7 @@ router.get("/contests/:id", checkLoggedIn, async (req, res) => {
     });
   else res.redirect("/grade/contests");
 });
+
 async function getStandings(cid) {
   let subs = await grabSubs(undefined, cid);
   let users = await grabUsers();
@@ -333,6 +347,7 @@ async function getStandings(cid) {
   }
   return { title: contest.name, pnum: problems.length, load: load2 };
 }
+
 router.get("/contests/:id/standings", checkLoggedIn, async (req, res) => {
   let cid = req.params.id;
   let standings = await getStandings(cid);
@@ -344,6 +359,7 @@ router.get("/contests/:id/standings", checkLoggedIn, async (req, res) => {
     load: standings.load,
   });
 });
+
 router.get("/contests/:id/status", checkLoggedIn, async (req, res) => {
   let user = req.query.user;
   let cid = req.params.id;
@@ -360,6 +376,7 @@ router.get("/contests/:id/status", checkLoggedIn, async (req, res) => {
     submissions: submissions,
   });
 });
+
 router.get("/problemset", checkLoggedIn, async (req, res) => {
   let vals = await grabAllProblems(req.session.admin);
   let lst = [];
@@ -378,6 +395,7 @@ router.get("/problemset", checkLoggedIn, async (req, res) => {
     problems: lst,
   });
 });
+
 router.get("/problemset/:id", checkLoggedIn, async (req, res) => {
   let vals = await grabProblem(req.params.id);
   let contest = await getContest(vals.cid);
@@ -440,6 +458,7 @@ router.get("/submit", checkLoggedIn, async (req, res) => {
     problem: problems,
   });
 });
+
 router.post("/status", checkLoggedIn, async (req, res) => {
   // sends file to another website
   let language = req.body.lang;
@@ -499,6 +518,7 @@ router.post("/status", checkLoggedIn, async (req, res) => {
     return;
   }
 });
+
 router.get("/status", checkLoggedIn, async (req, res) => {
   let user = req.query.user;
   let contest = req.query.contest;
@@ -518,6 +538,7 @@ router.get("/status", checkLoggedIn, async (req, res) => {
     page: page,
   });
 });
+
 router.get("/status/:id", checkLoggedIn, async (req, res) => {
   let vals = await grabStatus(req.params.id);
   if (vals.user == req.session.userid || req.session.admin) {
@@ -536,9 +557,11 @@ router.get("/status/:id", checkLoggedIn, async (req, res) => {
     res.send("You do not have permission to view this submission");
   }
 });
+
 router.get("/rankings", checkLoggedIn, async (req, res) => {
   res.redirect("/grade/rankings/2025");
 });
+
 router.get("/rankings/:season", checkLoggedIn, async (req, res) => {
   let season = Number(req.params.season);
   let rankings = await getStats(season);
@@ -612,6 +635,7 @@ router.get("/rankings/:season", checkLoggedIn, async (req, res) => {
     rankings: rankings,
   });
 });
+
 function checkLoggedIn(req, res, next) {
   if (req.session.loggedin) {
     if (req.session.mobile) {

@@ -20,6 +20,7 @@ router.get("/", async (req, res) => {
     res.redirect("/");
   }
 });
+
 router.get("/skip", async (req, res) => {
   let admin = req.session.admin;
   if (admin) {
@@ -30,6 +31,7 @@ router.get("/skip", async (req, res) => {
     res.redirect("/");
   }
 });
+
 router.get("/togglepause", async (req, res) => {
   let admin = req.session.admin;
   if (admin) {
@@ -47,6 +49,7 @@ router.get("/togglepause", async (req, res) => {
     res.redirect("/");
   }
 });
+
 router.get("/queue", async (req, res) => {
   let admin = req.session.admin;
   if (admin) {
@@ -61,6 +64,7 @@ router.get("/queue", async (req, res) => {
     res.redirect("/");
   }
 });
+
 router.get("/createProblem", async (req, res) => {
   let pid = req.query.pid;
   if (!pid) {
@@ -94,6 +98,7 @@ router.get("/createProblem", async (req, res) => {
     res.send("You are not an admin");
   }
 });
+
 router.get("/getProblem", async (req, res) => {
   let admin = req.session.admin;
   if (admin) {
@@ -103,6 +108,7 @@ router.get("/getProblem", async (req, res) => {
     res.send("You are not an admin");
   }
 });
+
 /*
 router.get("/addChecker", async(req, res)=>{ // not in use
         let cid = req.query.cid;
@@ -226,6 +232,7 @@ router.post("/addSol", async(req, res)=>{ // not in use
         }
 });
 */
+
 router.post("/create", async (req, res) => {
   let admin = req.session.admin;
   if (admin) {

@@ -43,6 +43,7 @@ async function grab(id) {
     });
   });
 }
+
 async function grabChecker(id) {
   // not in use
   return new Promise((resolve, reject) => {
@@ -72,6 +73,7 @@ async function grabChecker(id) {
     });
   });
 }
+
 async function grabAllProblems(isAdmin) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -102,6 +104,7 @@ async function grabAllProblems(isAdmin) {
     });
   });
 }
+
 async function grabSubs(user, contest) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -162,6 +165,7 @@ async function grabSubs(user, contest) {
     });
   });
 }
+
 async function grabStatus(id) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -196,6 +200,7 @@ async function grabStatus(id) {
     });
   });
 }
+
 async function grabProblem(id) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -234,6 +239,7 @@ async function grabProblem(id) {
     });
   });
 }
+
 async function insertSubmission(id, verdict, runtime, memory, insight) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -260,6 +266,7 @@ async function insertSubmission(id, verdict, runtime, memory, insight) {
     });
   });
 }
+
 async function createSubmission(
   user,
   code,
@@ -294,6 +301,7 @@ async function createSubmission(
     });
   });
 }
+
 async function grabProfile(id) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -321,6 +329,7 @@ async function grabProfile(id) {
     });
   });
 }
+
 async function addTest(tid, pid, tval) {
   // not in use
   return new Promise((resolve, reject) => {
@@ -341,6 +350,7 @@ async function addTest(tid, pid, tval) {
     });
   });
 }
+
 async function updateChecker(checkid, checkercode, lang) {
   // not in use
   return new Promise((resolve, reject) => {
@@ -361,6 +371,7 @@ async function updateChecker(checkid, checkercode, lang) {
     });
   });
 }
+
 async function addChecker(checkid, checkercode, lang) {
   // not in use
   return new Promise((resolve, reject) => {
@@ -381,6 +392,7 @@ async function addChecker(checkid, checkercode, lang) {
     });
   });
 }
+
 async function addSol(pid, code, lang) {
   // not in use
   return new Promise((resolve, reject) => {
@@ -401,6 +413,7 @@ async function addSol(pid, code, lang) {
     });
   });
 }
+
 async function addProblem(
   pid,
   pname,
@@ -427,7 +440,7 @@ async function addProblem(
       // pid | name | contestid | checkerid | solution | statement | tl | ml | interactive | secret | points
       let qry = `INSERT INTO problems (pid, name, contestid, checkerid,solution, statement, tl, ml, interactive, secret, inputtxt, outputtxt, samples, points)
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) ON CONFLICT (pid)
-			DO UPDATE SET 
+			DO UPDATE SET
 				name = excluded.name,
 				contestid= excluded.contestid,
 				checkerid= excluded.checkerid,
@@ -471,6 +484,7 @@ async function addProblem(
     });
   });
 }
+
 async function grabUsers() {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -494,6 +508,7 @@ async function grabUsers() {
     });
   });
 }
+
 async function grabContestProblems(cid) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -516,6 +531,7 @@ async function grabContestProblems(cid) {
     });
   });
 }
+
 async function validateUser(id, password) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -535,6 +551,7 @@ async function validateUser(id, password) {
     });
   });
 }
+
 async function updateUSACO(id, usaco) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -556,6 +573,7 @@ async function updateUSACO(id, usaco) {
     });
   });
 }
+
 async function updateCF(id, cf) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -578,6 +596,7 @@ async function updateCF(id, cf) {
     });
   });
 }
+
 async function updateCFRating() {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -644,6 +663,7 @@ async function updateCFRating() {
     });
   });
 }
+
 async function getAllContests() {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -667,6 +687,7 @@ async function getAllContests() {
     });
   });
 }
+
 async function getContest(cid) {
   return new Promise((resolve, reject) => {
     pl.connect((err, client, release) => {
@@ -690,6 +711,7 @@ async function getContest(cid) {
     });
   });
 }
+
 async function getStats(season) {
   await updateCFRating();
   return new Promise((resolve, reject) => {
